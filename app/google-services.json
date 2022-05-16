@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "803118270628",
+    "firebase_url": "https://chatapp-b0a14-default-rtdb.firebaseio.com",
+    "project_id": "chatapp-b0a14",
+    "storage_bucket": "chatapp-b0a14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803118270628:android:e363a7d183e15cf819fe31",
+        "android_client_info": {
+          "package_name": "com.cometchat.pro.androiduikit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803118270628-1hc1s79crem14ctshk1etpa35vq2p9do.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxCUVg3tyDcKLRLQcHXkdKR89gP08stXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803118270628-1hc1s79crem14ctshk1etpa35vq2p9do.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

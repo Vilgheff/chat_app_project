@@ -1,0 +1,179 @@
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:fillViewport="true"
+            tools:context="com.cometchat.pro.uikit.ui_components.groups.group_list.CometChatGroupList">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:padding="4dp"
+                    android:text="SignIn"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTitle"
+                    android:id="@+id/tvDes1"
+                    android:layout_marginStart="16dp"
+                    android:padding="4dp"
+                    android:text="Welcome to CometChat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDes1"
+                    android:id="@+id/tvDes2"
+                    android:layout_marginStart="16dp"
+                    android:padding="4dp"
+                    android:text="Please Enter UID to Continue"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:animateLayoutChanges="true"
+                    android:layout_below="@id/tvDes2"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="56dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputUID"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter UID"
+                        android:textColorHint="@color/secondaryTextColor"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusBottomStart="24dp"
+                        app:boxCornerRadiusTopEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="@color/secondaryTextColor"
+                        app:boxStrokeWidth="1dp"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/primaryTextColor">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etUID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:textColor="@color/primaryTextColor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <ProgressBar
+                        android:id="@+id/loginProgress"
+                        android:visibility="gone"
+                        android:indeterminateTint="@color/primaryTextColor"
+                        android:layout_alignEnd="@+id/inputUID"
+                        android:layout_alignBottom="@+id/inputUID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDes2"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="130dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="411dp"
+                    android:animateLayoutChanges="true">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputPass"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Password"
+                        android:textColorHint="@color/secondaryTextColor"
+                        app:boxCornerRadiusBottomEnd="24dp"
+                        app:boxCornerRadiusBottomStart="24dp"
+                        app:boxCornerRadiusTopEnd="24dp"
+                        app:boxCornerRadiusTopStart="24dp"
+                        app:boxStrokeColor="@color/secondaryTextColor"
+                        app:boxStrokeWidth="1dp"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/primaryTextColor">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/primaryTextColor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="380dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primaryTextColor">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/log_in_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primaryTextColor"
+                        android:text="Log In"
+                        app:rippleColor="@color/light_grey" />
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Don't have any users?" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:onClick="createUser"
+                        android:text="Create Now"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+        </ScrollView>
+</layout>
