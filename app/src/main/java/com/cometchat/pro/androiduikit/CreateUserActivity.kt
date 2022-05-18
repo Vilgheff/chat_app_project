@@ -8,7 +8,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.cometchat.pro.androiduikit.constants.AppConfig
+import com.cometchat.pro.androiduikit.databinding.ActivityCreateUserBinding
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.core.CometChat.CallbackListener
 import com.cometchat.pro.exceptions.CometChatException
@@ -19,6 +21,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.cometchat.pro.uikit.ui_resources.utils.Utils
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class CreateUserActivity : AppCompatActivity() {
     private var inputUid: TextInputLayout? = null
@@ -30,9 +35,13 @@ class CreateUserActivity : AppCompatActivity() {
     private var title: TextView? = null
     private var des1: TextView? = null
     private var des2: TextView? = null
+    private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivityCreateUserBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
+        auth = Firebase.auth
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_create_user)
         inputUid = findViewById(R.id.inputUID)
         inputName = findViewById(R.id.inputName)
         title = findViewById(R.id.tvTitle)
@@ -41,12 +50,11 @@ class CreateUserActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.createUser_pb)
         uid = findViewById(R.id.etUID)
         name = findViewById(R.id.etName)
-        createUserBtn = findViewById(R.id.create_user_btn)
-        createUserBtn!!.setTextColor(resources.getColor(R.color.textColorWhite))
-        createUserBtn!!.setOnClickListener(View.OnClickListener {
-            if (uid!!.text.toString().isEmpty()) uid!!.error = resources.getString(R.string.fill_this_field) else if (name!!.text.toString().isEmpty()) name!!.error = resources.getString(R.string.fill_this_field) else {
-                progressBar!!.visibility = View.VISIBLE
-                createUserBtn!!.isClickable = false
+        binding.createUserBtn.setTextColor(resources.getColor(R.color.textColorWhite))
+        binding.createUserBtn.setOnClickListener(View.OnClickListener {
+            if (binding.etUID.text.toString().isEmpty()) binding.etUID.error = resources.getString(R.string.fill_this_field) else if (binding.etName.text.toString().isEmpty()) binding.etName.error = resources.getString(R.string.fill_this_field) else {
+                binding.createUserPb.visibility = View.VISIBLE
+                binding.createUserBtn.isClickable = false
                 val user = User()
                 user.uid = uid!!.text.toString()
                 user.name = name!!.text.toString()
@@ -62,35 +70,7 @@ class CreateUserActivity : AppCompatActivity() {
                 })
             }
         })
-        checkDarkMode()
     }
-
-    private fun checkDarkMode() {
-        if (Utils.isDarkMode(this)) {
-            title!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            des2!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            uid!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            name!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            inputUid!!.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-            inputUid!!.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-            inputUid!!.boxStrokeColor = resources.getColor(R.color.textColorWhite)
-            inputName!!.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-            inputName!!.boxStrokeColor = resources.getColor(R.color.textColorWhite)
-            inputName!!.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-            progressBar!!.indeterminateTintList = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-        } else {
-            title!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            des2!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            uid!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            inputUid!!.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.secondaryTextColor))
-            inputUid!!.boxStrokeColor = resources.getColor(R.color.primaryTextColor)
-            inputName!!.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.secondaryTextColor))
-            inputName!!.boxStrokeColor = resources.getColor(R.color.primaryTextColor)
-            name!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            progressBar!!.indeterminateTintList = ColorStateList.valueOf(resources.getColor(R.color.primaryTextColor))
-        }
-    }
-
     private fun login(user: User) {
         CometChat.login(user.uid, AppConfig.AppDetails.AUTH_KEY, object : CallbackListener<User?>() {
             override fun onSuccess(user: User?) {

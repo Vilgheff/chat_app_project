@@ -1,6 +1,5 @@
 package com.cometchat.pro.androiduikit
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -34,102 +33,80 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
-    private var inputLayout: TextInputLayout? = null
-    private var progressBar: ProgressBar? = null
-    private var uid: TextInputEditText? = null
-    private var loginButton: ImageButton? = null
-    private var title: TextView? = null
-    private var des1: TextView? = null
-    private var des2: TextView? = null
+    companion object{
+        private val TAG = LoginActivity::class.java.simpleName
+    }
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
-    lateinit var binding : ActivityLoginBinding
-    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        title = findViewById(R.id.tvTitle)
-        des1 = findViewById(R.id.tvDes1)
-        des2 = findViewById(R.id.tvDes2)
-        uid = findViewById(R.id.etUID)
-        progressBar = findViewById(R.id.loginProgress)
-        inputLayout = findViewById(R.id.inputUID)
-        loginButton = findViewById(R.id.log_in_btn)
         // Initialize Firebase Auth
         auth = Firebase.auth
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
-        uid?.addTextChangedListener(object : TextWatcher{
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.etUID.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                inputLayout?.endIconDrawable = getDrawable(R.drawable.ic_arrow_right_24dp)
+                binding.inputUID.endIconDrawable = getDrawable(R.drawable.ic_arrow_right_24dp)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
-        uid!!.setOnEditorActionListener(OnEditorActionListener { textView: TextView?, i: Int, keyEvent: KeyEvent? ->
+        binding.etUID.setOnEditorActionListener(OnEditorActionListener { textView: TextView?, i: Int, keyEvent: KeyEvent? ->
+            var uid = binding.etUID.text.toString().trim()
+            var password = binding.etPass.text.toString().trim()
             if (i == EditorInfo.IME_ACTION_DONE) {
-                if (uid!!.text.toString().isEmpty()) {
-                    inputLayout?.endIconDrawable = null
-
-                    uid?.error = resources.getString(R.string.fill_this_field)
+                if (uid.isEmpty()) {
+                    binding.inputUID.endIconDrawable = null
+                    binding.etUID.error = resources.getString(R.string.fill_this_field)
                 } else {
-                    progressBar!!.visibility = View.VISIBLE
-                    inputLayout!!.isEndIconVisible = false
-                    login(uid!!.text.toString())
+                    binding.loginProgress.visibility = View.VISIBLE
+                    binding.inputUID.isEndIconVisible = false
+                    login(uid,password)
                 }
             }
             true
         })
-        loginButton!!.setOnClickListener(View.OnClickListener { view: View? ->
-            if (uid!!.text.toString().isEmpty()) {
-                inputLayout?.endIconDrawable = null
-                uid?.error = resources.getString(R.string.fill_this_field)
+
+        binding.logInBtn.setOnClickListener(View.OnClickListener { view: View? ->
+            var uid = binding.etUID.text.toString().trim()
+            var password = binding.etPass.text.toString().trim()
+            if (uid.isEmpty()) {
+                binding.inputUID.endIconDrawable = null
+                binding.etUID.error = resources.getString(R.string.fill_this_field)
             } else {
                 findViewById<View>(R.id.loginProgress).visibility = View.VISIBLE
-                inputLayout!!.isEndIconVisible = false
-                login(uid!!.text.toString())
+                binding.inputUID.isEndIconVisible = false
+                login(uid, password)
             }
         })
-        checkDarkMode()
     }
-
-    private fun checkDarkMode() {
-        if (Utils.isDarkMode(this)) {
-            title!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            des1!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            des2!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            uid!!.setTextColor(resources.getColor(R.color.textColorWhite))
-            inputLayout!!.boxStrokeColor = resources.getColor(R.color.textColorWhite)
-            inputLayout!!.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-            inputLayout!!.defaultHintTextColor = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-            uid!!.setHintTextColor(resources.getColor(R.color.textColorWhite))
-            progressBar!!.indeterminateTintList = ColorStateList.valueOf(resources.getColor(R.color.textColorWhite))
-        } else {
-            title!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            des1!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            des2!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            uid!!.setTextColor(resources.getColor(R.color.primaryTextColor))
-            inputLayout!!.boxStrokeColor = resources.getColor(R.color.primaryTextColor)
-            uid!!.hint = ""
-            inputLayout!!.hintTextColor = ColorStateList.valueOf(resources.getColor(R.color.secondaryTextColor))
-            progressBar!!.indeterminateTintList = ColorStateList.valueOf(resources.getColor(R.color.primaryTextColor))
-        }
-    }
-
-    private fun login(uid: String) {
+    private fun login(uid: String, password: String) {
         CometChat.login(uid, AppConfig.AppDetails.AUTH_KEY, object : CallbackListener<User?>() {
             override fun onSuccess(user: User?) {
                 startActivity(Intent(this@LoginActivity, SelectActivity::class.java))
                 finish()
             }
-
             override fun onError(e: CometChatException) {
-                inputLayout!!.isEndIconVisible = true
+                binding.inputUID.isEndIconVisible = true
                 Log.e("login", "onError login: "+e.code)
                 findViewById<View>(R.id.loginProgress).visibility = View.GONE
                 ErrorMessagesUtils.cometChatErrorMessage(this@LoginActivity, e.code)
             }
         })
+        auth.signInWithEmailAndPassword(uid, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = auth.currentUser
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
     }
-
     fun createUser(view: View?) {
         startActivity(Intent(this@LoginActivity, CreateUserActivity::class.java))
     }
