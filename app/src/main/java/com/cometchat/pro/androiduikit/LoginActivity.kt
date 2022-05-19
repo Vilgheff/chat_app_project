@@ -45,6 +45,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
+    val database1 = Firebase.database
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -86,12 +88,9 @@ class LoginActivity : AppCompatActivity() {
                 binding.inputUID.isEndIconVisible = false
                 loginComet(uid)
             }
-            usermodel().uid = uid
-            usermodel().name = password
-            database = Firebase.database.reference
-            database.child("Users").child(uid).setValue(usermodel())
-
         })
+        val myRef = database1.getReference("message")
+        myRef.setValue("Hello, World!")
     }
     private fun initFirebase() {
         auth = FirebaseAuth.getInstance()

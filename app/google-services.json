@@ -8,9 +8,46 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:803118270628:android:e363a7d183e15cf819fe31",
+        "mobilesdk_app_id": "1:803118270628:android:de278e4dc4f0185f19fe31",
         "android_client_info": {
           "package_name": "com.cometchat.pro.androiduikit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803118270628-51v21mss3gupeddb4mr7mecrnk952ktn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cometchat.pro.androiduikit",
+            "certificate_hash": "8e7008f4b36eeed60b2a52bb9925834ef47fbabb"
+          }
+        },
+        {
+          "client_id": "803118270628-1hc1s79crem14ctshk1etpa35vq2p9do.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxCUVg3tyDcKLRLQcHXkdKR89gP08stXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803118270628-1hc1s79crem14ctshk1etpa35vq2p9do.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803118270628:android:544ae90c57d692f419fe31",
+        "android_client_info": {
+          "package_name": "vn.edu.hcmus.chatProject"
         }
       },
       "oauth_client": [
