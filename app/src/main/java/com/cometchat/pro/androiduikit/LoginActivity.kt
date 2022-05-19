@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cometchat.pro.androiduikit.constants.AppConfig
 import com.cometchat.pro.androiduikit.databinding.ActivityLoginBinding
+import com.cometchat.pro.androiduikit.model.usermodel
+import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.core.CometChat.CallbackListener
 import com.cometchat.pro.exceptions.CometChatException
@@ -30,6 +32,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.cometchat.pro.uikit.ui_resources.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.core.Constants
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
@@ -38,11 +44,13 @@ class LoginActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        // Initialize Firebase Auth
-        auth = Firebase.auth
+        initFirebase()
+        initFirebaseDatabase()
+        initCometChat()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.etUID.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -61,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     binding.loginProgress.visibility = View.VISIBLE
                     binding.inputUID.isEndIconVisible = false
-                    login(uid,password)
+                    loginComet(uid)
                 }
             }
             true
@@ -76,11 +84,34 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 findViewById<View>(R.id.loginProgress).visibility = View.VISIBLE
                 binding.inputUID.isEndIconVisible = false
-                login(uid, password)
+                loginComet(uid)
+            }
+            usermodel().uid = uid
+            usermodel().name = password
+            database = Firebase.database.reference
+            database.child("Users").child(uid).setValue(usermodel())
+
+        })
+    }
+    private fun initFirebase() {
+        auth = FirebaseAuth.getInstance()
+    }
+    private fun initFirebaseDatabase() {
+        database = FirebaseDatabase.getInstance(AppConfig.AppDetails.FIREBASE_REALTIME_DATABASE_URL).getReference()
+    }
+    private fun initCometChat() {
+        val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(
+            AppConfig.AppDetails.REGION).build()
+
+        CometChat.init(this, AppConfig.AppDetails.APP_ID, appSettings, object : CometChat.CallbackListener<String>() {
+            override fun onSuccess(successMessage: String) {
+            }
+
+            override fun onError(e: CometChatException) {
             }
         })
     }
-    private fun login(uid: String, password: String) {
+    private fun loginComet(uid: String) {
         CometChat.login(uid, AppConfig.AppDetails.AUTH_KEY, object : CallbackListener<User?>() {
             override fun onSuccess(user: User?) {
                 startActivity(Intent(this@LoginActivity, SelectActivity::class.java))
@@ -93,19 +124,6 @@ class LoginActivity : AppCompatActivity() {
                 ErrorMessagesUtils.cometChatErrorMessage(this@LoginActivity, e.code)
             }
         })
-        auth.signInWithEmailAndPassword(uid, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithEmail:success")
-                    val user = auth.currentUser
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                }
-            }
     }
     fun createUser(view: View?) {
         startActivity(Intent(this@LoginActivity, CreateUserActivity::class.java))
