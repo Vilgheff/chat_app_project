@@ -67,7 +67,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter UID"
+                        android:hint="Enter Email"
                         android:textColorHint="@color/secondaryTextColor"
                         app:boxCornerRadiusBottomEnd="24dp"
                         app:boxCornerRadiusBottomStart="24dp"
@@ -79,7 +79,7 @@
                         app:endIconTint="@color/primaryTextColor">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etUID"
+                            android:id="@+id/etEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"

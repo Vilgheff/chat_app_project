@@ -1,8 +1,11 @@
 package com.cometchat.pro.androiduikit
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cometchat.pro.androiduikit.constants.AppConfig
 import com.cometchat.pro.androiduikit.databinding.ActivityCreateUserBinding
+import com.cometchat.pro.androiduikit.model.UserModel
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.core.CometChat.CallbackListener
 import com.cometchat.pro.exceptions.CometChatException
@@ -23,64 +27,115 @@ import com.google.android.material.textfield.TextInputLayout
 import com.cometchat.pro.uikit.ui_resources.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_create_user.*
+import java.util.*
 
 class CreateUserActivity : AppCompatActivity() {
-    private var inputUid: TextInputLayout? = null
-    private var inputName: TextInputLayout? = null
-    private var uid: TextInputEditText? = null
-    private var name: TextInputEditText? = null
-    private var createUserBtn: MaterialButton? = null
-    private var progressBar: ProgressBar? = null
-    private var title: TextView? = null
-    private var des1: TextView? = null
-    private var des2: TextView? = null
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private var pDialog: ProgressDialog? = null
     private lateinit var binding: ActivityCreateUserBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
         auth = Firebase.auth
+        initViews()
         binding = DataBindingUtil.setContentView(this,R.layout.activity_create_user)
-        inputUid = findViewById(R.id.inputUID)
-        inputName = findViewById(R.id.inputName)
-        title = findViewById(R.id.tvTitle)
-        des1 = findViewById(R.id.tvDes1)
-        des2 = findViewById(R.id.tvDes2)
-        progressBar = findViewById(R.id.createUser_pb)
-        uid = findViewById(R.id.etUID)
-        name = findViewById(R.id.etName)
+        binding.etPass.transformationMethod = PasswordTransformationMethod.getInstance()
+        binding.etConfPass.transformationMethod = PasswordTransformationMethod.getInstance()
         binding.createUserBtn.setTextColor(resources.getColor(R.color.textColorWhite))
         binding.createUserBtn.setOnClickListener(View.OnClickListener {
-            if (binding.etUID.text.toString().isEmpty()) binding.etUID.error = resources.getString(R.string.fill_this_field) else if (binding.etName.text.toString().isEmpty()) binding.etName.error = resources.getString(R.string.fill_this_field) else {
-                binding.createUserPb.visibility = View.VISIBLE
-                binding.createUserBtn.isClickable = false
-                val user = User()
-                user.uid = uid!!.text.toString()
-                user.name = name!!.text.toString()
-                CometChat.createUser(user, AppConfig.AppDetails.AUTH_KEY, object : CallbackListener<User>() {
-                    override fun onSuccess(user: User) {
-                        login(user)
-                    }
-
-                    override fun onError(e: CometChatException) {
-                        createUserBtn!!.isClickable = true
-                        ErrorMessagesUtils.cometChatErrorMessage(this@CreateUserActivity, e.code)
-                    }
-                })
+            register()
+        })
+    }
+    private fun initViews() {
+        pDialog = ProgressDialog(this)
+        pDialog!!.setMessage("Loading")
+        pDialog!!.setCanceledOnTouchOutside(false)
+    }
+    private fun validate(fullName: String?, email: String?, password: String?, confirmPassword: String?): Boolean {
+        if (fullName == null || fullName.equals("")) {
+            Toast.makeText(this@CreateUserActivity, "Please input your full name", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (email == null || email.equals("")) {
+            Toast.makeText(this@CreateUserActivity, "Please input your email", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (password == null || password.equals("")) {
+            Toast.makeText(this@CreateUserActivity, "Please input your password", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (confirmPassword == null || confirmPassword.equals("")) {
+            Toast.makeText(this@CreateUserActivity, "Please input your confirm password", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this@CreateUserActivity, "Your password and confirm password must be matched", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+    private fun goToLoginActivity() {
+        intent = Intent(this@CreateUserActivity, LoginActivity::class.java)
+        startActivity(intent)
+    }
+    private fun createCometChatAccount(userId: String?, fullname: String?) {
+        val authKey = AppConfig.AppDetails.AUTH_KEY // Replace with your API Key.
+        val user = User()
+        user.uid = userId // Replace with your uid for the user to be created.
+        user.name = fullname // Replace with the name of the user
+        CometChat.createUser(user, authKey, object : CallbackListener<User>() {
+            override fun onSuccess(user: User) {
+                pDialog!!.dismiss()
+                Toast.makeText(this@CreateUserActivity, fullname + " was created successfully", Toast.LENGTH_LONG).show()
+                goToLoginActivity()
+            }
+            override fun onError(e: CometChatException) {
+                pDialog!!.dismiss()
+                Log.d("Error", e.printStackTrace().toString())
+                Toast.makeText(this@CreateUserActivity, e.printStackTrace().toString(), Toast.LENGTH_LONG).show()
             }
         })
     }
-    private fun login(user: User) {
-        CometChat.login(user.uid, AppConfig.AppDetails.AUTH_KEY, object : CallbackListener<User?>() {
-            override fun onSuccess(user: User?) {
-                startActivity(Intent(this@CreateUserActivity, SelectActivity::class.java))
-            }
-
-            override fun onError(e: CometChatException) {
-                if (uid != null) Snackbar.make(uid!!.rootView, "Unable to login", Snackbar.LENGTH_INDEFINITE).setAction("Try Again") { startActivity(Intent(this@CreateUserActivity, LoginActivity::class.java)) }.show()
-                else ErrorMessagesUtils.cometChatErrorMessage(this@CreateUserActivity, e.code)
-            }
-        })
+    private fun insertFirebaseDatabase(userId: String?, fullname: String?, email: String?) {
+        val userModel = UserModel()
+        userModel.uid = userId
+        userModel.name = fullname
+        userModel.email = email
+        database = Firebase.database.reference;
+        database.child("users").child(userId!!).setValue(userModel)
+    }
+    private fun createFirebaseAccount(fullname: String?, email: String?, password: String?) {
+        if (email != null && password != null) {
+            auth = Firebase.auth
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val userId = UUID.randomUUID()
+                        insertFirebaseDatabase(userId.toString(), fullname, email)
+                        createCometChatAccount(userId.toString(), fullname)
+                    } else {
+                        pDialog!!.dismiss()
+                        Toast.makeText(this@CreateUserActivity, "Cannot create your account, please try again", Toast.LENGTH_LONG).show();
+                    }
+                }
+        } else {
+            pDialog!!.dismiss()
+            Toast.makeText(this@CreateUserActivity, "Please provide your email and password", Toast.LENGTH_LONG).show();
+        }
+    }
+    private fun register() {
+        val fullName = binding.etName.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPass.text.toString().trim()
+        val confirmPassword = binding.etConfPass.text.toString().trim()
+        if (validate(fullName, email, password, confirmPassword)) {
+            pDialog!!.show()
+            createFirebaseAccount(fullName,email, password)
+        }
     }
 }

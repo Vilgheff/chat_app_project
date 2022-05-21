@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ScrollView xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -51,8 +52,8 @@
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="379dp"
-                android:layout_height="302dp"
+                android:layout_width="349dp"
+                android:layout_height="373dp"
                 android:layout_below="@id/tvDes2"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="56dp"
@@ -65,7 +66,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter UID"
+                    android:hint="Enter Email"
                     android:textColorHint="@color/secondaryTextColor"
                     app:boxCornerRadiusBottomEnd="24dp"
                     app:boxCornerRadiusBottomStart="24dp"
@@ -75,7 +76,7 @@
                     app:boxStrokeWidth="1dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etUID"
+                        android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -91,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Enter Name"
+                    android:hint="Enter Your Name"
                     android:textColorHint="@color/secondaryTextColor"
                     app:boxCornerRadiusBottomEnd="24dp"
                     app:boxCornerRadiusBottomStart="24dp"
@@ -128,6 +129,32 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/primaryTextColor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputConfPass"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Enter Confirm Password"
+                    android:textColorHint="@color/secondaryTextColor"
+                    app:boxCornerRadiusBottomEnd="24dp"
+                    app:boxCornerRadiusBottomStart="24dp"
+                    app:boxCornerRadiusTopEnd="24dp"
+                    app:boxCornerRadiusTopStart="24dp"
+                    app:boxStrokeColor="@color/secondaryTextColor"
+                    app:boxStrokeWidth="1dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etConfPass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
