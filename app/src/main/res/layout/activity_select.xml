@@ -22,41 +22,44 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             android:layout_height="wrap_content">
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/project"
                     android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
-                    android:layout_height="48dp"/>
-                <TextView
-                    android:drawablePadding="10dp"
                     android:layout_marginTop="16dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="CometChat UI"
+                    android:src="@drawable/talking4258" />
+
+                <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="10dp"
+                    android:text="Go to chat screen" />
 
                 <View
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/menu_background_grey"
                     android:layout_width="wrap_content"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/menu_background_grey" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/directLaunch"
-                    android:textAllCaps="false"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:textColor="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
                     android:layout_gravity="center_horizontal"
                     android:text="Launch"
-                    android:textStyle="bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"/>
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
@@ -74,7 +77,7 @@
 
                 <ImageView
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/wall"
+                    android:src="@drawable/settings778"
                     android:layout_width="48dp"
                     android:layout_gravity="center"
                     android:layout_height="48dp"/>
@@ -82,7 +85,7 @@
                     android:drawablePadding="10dp"
                     android:layout_marginTop="16dp"
                     android:layout_gravity="center_horizontal"
-                    android:text="Profile Setting"
+                    android:text="Go to profile setting"
                     style="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

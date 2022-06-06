@@ -52,13 +52,17 @@
                     android:padding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
-                        android:text="Avatar"
                         android:id="@+id/avatar_title"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/multimedia"
+                        android:drawablePadding="6dp"
+                        android:text="Avatar"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/avatar_right_arrow"
@@ -84,13 +88,17 @@
                     android:padding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
-                        android:text="Status Indicator"
                         android:id="@+id/status_title"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/greenmailicon"
+                        android:text="Active Status"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textSize="22dp"
+                        android:drawablePadding="6dp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/statusrightArrow"
@@ -116,13 +124,17 @@
                     android:padding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
-                        android:text="Badge Count"
                         android:id="@+id/badge_title"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/notification"
+                        android:drawablePadding="6dp"
+                        android:text="Notifications"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/badgerightArrow"
