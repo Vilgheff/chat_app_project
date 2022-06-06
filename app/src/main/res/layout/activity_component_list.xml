@@ -19,13 +19,14 @@
             android:src="@drawable/ic_keyboard_backspace_black_24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <TextView
-            android:textStyle="bold"
-            android:text="UI Components"
-            android:layout_centerHorizontal="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Profile Setting"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold" />
     </RelativeLayout>
     <ScrollView
         android:layout_marginBottom="8dp"
@@ -58,19 +59,14 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_toLeftOf="@+id/avatar_right_arrow"
-                        android:layout_below="@+id/avatar_title"
-                        android:text="@string/avatar_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+
                     <ImageView
                         android:id="@+id/avatar_right_arrow"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_arrow_right_24dp"
                         android:layout_width="32dp"
-                        android:layout_height="32dp"/>
+                        android:layout_height="32dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_right_24dp" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
@@ -95,12 +91,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_toStartOf="@+id/statusrightArrow"
-                        android:layout_below="@id/status_title"
-                        android:text="@string/statusIndicator_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+
                     <ImageView
                         android:id="@+id/statusrightArrow"
                         android:layout_centerVertical="true"
@@ -132,12 +123,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_toStartOf="@id/badgerightArrow"
-                        android:layout_below="@+id/badge_title"
-                        android:text="@string/badgeCount_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+
                     <ImageView
                         android:id="@+id/badgerightArrow"
                         android:layout_centerVertical="true"
@@ -157,33 +143,7 @@
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
                 app:cardCornerRadius="16dp"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:padding="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="User List"
-                        android:id="@+id/uservwtitle"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_toLeftOf="@+id/uservwrightArrow"
-                        android:layout_below="@+id/uservwtitle"
-                        android:text="@string/userlist_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <ImageView
-                        android:id="@+id/uservwrightArrow"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_arrow_right_24dp"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"/>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_height="wrap_content"/>
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 app:cardElevation="4dp"
@@ -194,33 +154,7 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:padding="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="Group List"
-                        android:id="@+id/groupvwtitle"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_toLeftOf="@+id/groupvwrightArrow"
-                        android:layout_below="@+id/groupvwtitle"
-                        android:text="@string/grouplist_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <ImageView
-                        android:id="@+id/groupvwrightArrow"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_arrow_right_24dp"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"/>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_height="wrap_content"/>
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 app:cardElevation="4dp"
@@ -232,33 +166,7 @@
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
                 app:cardCornerRadius="16dp"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:padding="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="Conversation List"
-                        android:id="@+id/conversation_title"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_toLeftOf="@+id/conversation_right_arrow"
-                        android:layout_below="@+id/conversation_title"
-                        android:text="@string/conversationlist_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <ImageView
-                        android:id="@+id/conversation_right_arrow"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_arrow_right_24dp"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"/>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_height="wrap_content"/>
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:id="@+id/cometchat_callList"
@@ -269,33 +177,7 @@
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
                 app:cardCornerRadius="16dp"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:padding="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="Call List"
-                        android:id="@+id/callList_title"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_toLeftOf="@+id/callList_right_arrow"
-                        android:layout_below="@+id/callList_title"
-                        android:text="@string/callList_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <ImageView
-                        android:id="@+id/callList_right_arrow"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_arrow_right_24dp"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"/>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_height="wrap_content"/>
          </LinearLayout>
     </ScrollView>
 </LinearLayout>
